@@ -24,6 +24,12 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Usiamo la tua posizione per aiutarti a orientarti all'interno della mappa e raggiungere facilmente i tuoi punti di interesse, in ogni momento.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Usiamo la tua posizione per aiutarti a orientarti all'interno della mappa mentre utilizzi l'app.</string>
+	<key>NSMotionUsageDescription</key>
+	<string>Utilizziamo i dati dei sensori per aiutarti a orientarti all'interno della mappa mentre usi l'app.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
