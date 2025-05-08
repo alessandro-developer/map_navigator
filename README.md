@@ -1,2 +1,3 @@
 # map_navigator
-IT: mplementazione di funzionalità di navigazione e visualizzazione mappe in Flutter.
+IT: Implementazione di funzionalità di navigazione e visualizzazione mappe in Flutter.
+EN: Implementation of map visualization and navigation features in Flutter.
