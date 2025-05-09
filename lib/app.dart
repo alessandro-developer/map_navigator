@@ -1,12 +1,28 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:loader_overlay/loader_overlay.dart';
+
 import 'package:map_navigator/presentation.dart';
 
 class App extends StatelessWidget {
-  const App({super.key});
+  App({super.key});
 
-  // This widget is the root of your application.
+  final appRouter = AppRoute();
+  final navKey = GlobalKey<NavigatorState>();
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(title: 'Map Navigator Demo', home: const HomePage());
+    return MaterialApp(
+      builder:
+          (context, child) => LoaderOverlay(
+            overlayColor: Colors.black.withValues(alpha: 0.2),
+            overlayWidgetBuilder: (_) => Center(child: CupertinoActivityIndicator(color: Colors.white, radius: 15)),
+            child: child!,
+          ),
+      initialRoute: settingsRoute,
+      navigatorKey: navKey,
+      onGenerateRoute: appRouter.onGenerateRoute,
+      title: 'Map Navigator',
+    );
   }
 }
