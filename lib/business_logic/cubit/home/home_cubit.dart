@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_compass/flutter_compass.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:formz/formz.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
@@ -13,10 +14,29 @@ import 'package:map_navigator/business_logic.dart';
 part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
-  HomeCubit() : super(HomeState());
+  HomeCubit()
+    : super(
+        HomeState(
+          mapBounds: LatLngBounds.fromPoints(<LatLng>[
+            LatLng(41.043677, 16.977200),
+            LatLng(41.044001, 17.001146),
+            LatLng(41.025484, 17.001490),
+            LatLng(41.024966, 16.978058),
+          ]),
+        ),
+      );
 
   /// INIZIALIZZO IL PLUGIN GELOCATOR:
   GeolocatorPlatform geolocatorPlatform = GeolocatorPlatform.instance;
+
+  /// VERIFICO SE MI TROVO ALL'INTERNO DELLA MAPPA:
+  bool _isWithinBounds(LatLng? position) {
+    if (position == null || state.mapBounds == null) {
+      return false;
+    }
+
+    return state.mapBounds!.contains(position);
+  }
 
   /// OTTENGO LA POSIZIONE INIZIALE:
   getCurrentPosition({required PermissionCubit permissionCubit}) async {
@@ -30,7 +50,17 @@ class HomeCubit extends Cubit<HomeState> {
       final Position currentPosition = await geolocatorPlatform.getCurrentPosition();
       final LatLng initialMapCenter = LatLng(currentPosition.latitude, currentPosition.longitude);
 
-      emit(state.copyWith(initialMapStatus: FormzSubmissionStatus.success, initialMapCenter: initialMapCenter));
+      if (!_isWithinBounds(initialMapCenter)) {
+        emit(
+          state.copyWith(
+            initialMapStatus: FormzSubmissionStatus.success,
+            initialMapCenter: LatLng(41.034000450212865, 16.9852853289918),
+            isOut: true,
+          ),
+        );
+      } else {
+        emit(state.copyWith(initialMapStatus: FormzSubmissionStatus.success, initialMapCenter: initialMapCenter, isOut: false));
+      }
     } catch (e) {
       emit(state.copyWith(initialMapStatus: FormzSubmissionStatus.failure));
     }
@@ -77,7 +107,7 @@ class HomeCubit extends Cubit<HomeState> {
           (Position currentLocation) {
             final LatLng currentLatLng = LatLng(currentLocation.latitude, currentLocation.longitude);
 
-            emit(state.copyWith(currentLocation: currentLatLng));
+            emit(state.copyWith(currentLocation: currentLatLng, isOut: !_isWithinBounds(currentLatLng)));
           },
           onError: (e) {
             emit(state.copyWith(currentLocation: null));
@@ -135,5 +165,20 @@ class HomeCubit extends Cubit<HomeState> {
     _compassStreamSubscription?.cancel();
 
     return super.close();
+  }
+
+  /// OTTENGO LO ZOOM DELLA MAPPA:
+  void getMapZoom({required double mapZoom}) {
+    emit(state.copyWith(mapZoom: mapZoom));
+  }
+
+  /// OTTENGO LA ROTAZIONE DELLA MAPPA:
+  void getMapRotation({required double mapRotation}) {
+    emit(state.copyWith(mapRotation: mapRotation));
+  }
+
+  /// VERIFICO SE L'UTENTE INTERAGISCE CON LA MAPPA:
+  void isUserInteracting({required bool isUserInteracting}) {
+    emit(state.copyWith(isUserInteracting: isUserInteracting));
   }
 }
