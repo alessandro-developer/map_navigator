@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_compass/flutter_compass.dart';
+import 'package:formz/formz.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -16,6 +17,24 @@ class HomeCubit extends Cubit<HomeState> {
 
   /// INIZIALIZZO IL PLUGIN GELOCATOR:
   GeolocatorPlatform geolocatorPlatform = GeolocatorPlatform.instance;
+
+  /// OTTENGO LA POSIZIONE INIZIALE:
+  getCurrentPosition({required PermissionCubit permissionCubit}) async {
+    final bool hasPermission = await permissionCubit.handlePermission();
+    if (!hasPermission) {
+      return;
+    }
+
+    emit(state.copyWith(initialMapStatus: FormzSubmissionStatus.inProgress));
+    try {
+      final Position currentPosition = await geolocatorPlatform.getCurrentPosition();
+      final LatLng initialMapCenter = LatLng(currentPosition.latitude, currentPosition.longitude);
+
+      emit(state.copyWith(initialMapStatus: FormzSubmissionStatus.success, initialMapCenter: initialMapCenter));
+    } catch (e) {
+      emit(state.copyWith(initialMapStatus: FormzSubmissionStatus.failure));
+    }
+  }
 
   /// INIZIALIZZO GLI STREAM:
   StreamSubscription<Position>? _positionStreamSubscription;

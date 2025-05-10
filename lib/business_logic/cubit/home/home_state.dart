@@ -1,27 +1,38 @@
 part of 'home_cubit.dart';
 
 class HomeState extends Equatable {
-  final LatLng initialMapCenter;
+  final LatLng? initialMapCenter;
   final double initialMapZoom;
+  final FormzSubmissionStatus initialMapStatus;
   final LatLng? currentLocation;
   final double currentHeading;
 
   const HomeState({
-    this.initialMapCenter = const LatLng(38.93489044265242, 8.932107927301267),
-    this.initialMapZoom = 18,
+    this.initialMapCenter,
+    this.initialMapZoom = 18.0,
+    this.initialMapStatus = FormzSubmissionStatus.initial,
     this.currentLocation,
     this.currentHeading = 0.0,
   });
 
-  HomeState copyWith({LatLng? initialMapCenter, double? initialMapZoom, LatLng? currentLocation, double? currentHeading}) {
+  HomeState copyWith({
+    LatLng? initialMapCenter,
+    double? initialMapZoom,
+    FormzSubmissionStatus? initialMapStatus,
+    LatLng? currentLocation,
+    double? currentHeading,
+  }) {
     return HomeState(
       initialMapCenter: initialMapCenter ?? this.initialMapCenter,
       initialMapZoom: initialMapZoom ?? this.initialMapZoom,
+      initialMapStatus: initialMapStatus ?? this.initialMapStatus,
       currentLocation: currentLocation ?? this.currentLocation,
       currentHeading: currentHeading ?? this.currentHeading,
     );
   }
 
   @override
-  List<Object?> get props => [initialMapCenter, initialMapZoom, currentLocation, currentHeading];
+  List<Object?> get props {
+    return [initialMapCenter, initialMapZoom, initialMapStatus, currentLocation, currentHeading];
+  }
 }

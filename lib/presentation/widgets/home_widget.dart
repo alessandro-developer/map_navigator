@@ -23,7 +23,7 @@ class HomeWidget extends StatelessWidget {
         return FlutterMap(
           mapController: mapController,
           options: MapOptions(
-            initialCenter: state.initialMapCenter,
+            initialCenter: state.initialMapCenter!,
             interactionOptions: const InteractionOptions(flags: InteractiveFlag.all),
             initialZoom: state.initialMapZoom,
           ),
