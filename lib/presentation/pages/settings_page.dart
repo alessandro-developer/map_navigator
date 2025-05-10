@@ -28,7 +28,10 @@ class _SettingsPageState extends State<SettingsPage> {
       listener:
           (context, state) => switch (state.permissionsStatus) {
             FormzSubmissionStatus.inProgress => context.loaderOverlay.show(),
-            FormzSubmissionStatus.success => {Navigator.of(context).pushNamedAndRemoveUntil(homeRoute, (Route<dynamic> route) => false)},
+            FormzSubmissionStatus.success => {
+              context.loaderOverlay.hide(),
+              Navigator.of(context).pushNamedAndRemoveUntil(homeRoute, (Route<dynamic> route) => false),
+            },
             FormzSubmissionStatus.failure => {
               context.loaderOverlay.hide(),
               ScaffoldMessenger.of(context)
