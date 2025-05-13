@@ -18,11 +18,15 @@ class _SettingsPageState extends State<SettingsPage> {
   void initState() {
     super.initState();
 
-    context.read<PermissionCubit>().handlePermission();
+    final PermissionCubit permissionCubit = context.read<PermissionCubit>();
+    permissionCubit.handlePermission();
   }
 
   @override
   Widget build(BuildContext context) {
+    // Cubit:
+    final PermissionCubit permissionCubit = context.read<PermissionCubit>();
+
     return BlocConsumer<PermissionCubit, PermissionState>(
       listenWhen: (previous, current) => previous.permissionsGranted != current.permissionsGranted,
       listener:
@@ -43,7 +47,24 @@ class _SettingsPageState extends State<SettingsPage> {
 
       builder: (context, state) {
         return Scaffold(
-          appBar: AppBar(title: const Text('Impostazioni Localizzazione')),
+          appBar: AppBar(
+            backgroundColor: ColorPalette.blueLight,
+            centerTitle: true,
+            leading: GestureDetector(
+              onTap: () => Navigator.of(context).pushNamedAndRemoveUntil(profileRoute, (Route<dynamic> route) => false),
+              child: Icon(Icons.person_rounded, color: ColorPalette.white, size: 31),
+            ),
+            title: GestureDetector(
+              onTap:
+                  permissionCubit.state.permissionsGranted == true
+                      ? () => Navigator.of(context).pushNamedAndRemoveUntil(homeRoute, (Route<dynamic> route) => false)
+                      : () => Navigator.of(context).pushNamedAndRemoveUntil(settingsRoute, (Route<dynamic> route) => false),
+              child: Text('LOGO', style: CustomTextStyle.s31w500(ColorPalette.white)),
+            ),
+            titleSpacing: 0,
+            toolbarHeight: 80,
+          ),
+          backgroundColor: ColorPalette.white,
           body:
               state.permissionsStatus == FormzSubmissionStatus.inProgress
                   ? Container()

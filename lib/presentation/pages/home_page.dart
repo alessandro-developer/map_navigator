@@ -51,13 +51,9 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: ColorPalette.blueLight,
         centerTitle: true,
-        leading: BlocBuilder<HomeNavigationCubit, HomeNavigationState>(
-          builder: (context, state) {
-            return GestureDetector(
-              onTap: () => Navigator.of(context).pushNamedAndRemoveUntil(profileRoute, (Route<dynamic> route) => false),
-              child: Icon(Icons.person_rounded, color: ColorPalette.white, size: 31),
-            );
-          },
+        leading: GestureDetector(
+          onTap: () => Navigator.of(context).pushNamedAndRemoveUntil(profileRoute, (Route<dynamic> route) => false),
+          child: Icon(Icons.person_rounded, color: ColorPalette.white, size: 31),
         ),
         title: GestureDetector(
           onTap: () => homeNavigationCubit.changeHomePage(0),
