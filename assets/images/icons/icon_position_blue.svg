@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="60" height="60" viewBox="0 0 60 60">
+  <defs>
+    <clipPath id="clip-icon_position_ok">
+      <rect width="60" height="60"/>
+    </clipPath>
+  </defs>
+  <g id="icon_position_ok" clip-path="url(#clip-icon_position_ok)">
+    <g id="Raggruppa_258" data-name="Raggruppa 258" transform="translate(-331 -681)">
+      <path id="Tracciato_12943" data-name="Tracciato 12943" d="M30,0A30,30,0,1,1,0,30,30,30,0,0,1,30,0Z" transform="translate(331 681)" fill="#258cf8"/>
+      <g id="noun-center-1831596" transform="translate(343 693)">
+        <path id="Tracciato_133" data-name="Tracciato 133" d="M48.1,42.429a5.671,5.671,0,1,1-5.671-5.671A5.671,5.671,0,0,1,48.1,42.429Zm12.759,0a1.418,1.418,0,0,1-1.418,1.418h-3.62A13.491,13.491,0,0,1,43.847,55.821v3.62a1.418,1.418,0,1,1-2.835,0v-3.62A13.491,13.491,0,0,1,29.038,43.847h-3.62a1.418,1.418,0,1,1,0-2.835h3.62A13.491,13.491,0,0,1,41.012,29.038v-3.62a1.418,1.418,0,1,1,2.835,0v3.62A13.491,13.491,0,0,1,55.821,41.012h3.62A1.418,1.418,0,0,1,60.859,42.429Zm-7.8,0A10.632,10.632,0,1,0,42.429,53.062,10.644,10.644,0,0,0,53.062,42.429Z" transform="translate(-24 -24)" fill="#fff"/>
+      </g>
+    </g>
+  </g>
+</svg>
