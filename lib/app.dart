@@ -15,8 +15,8 @@ class App extends StatelessWidget {
     return MaterialApp(
       builder:
           (context, child) => LoaderOverlay(
-            overlayColor: Colors.black.withValues(alpha: 0.2),
-            overlayWidgetBuilder: (_) => Center(child: CupertinoActivityIndicator(color: Colors.white, radius: 15)),
+            overlayColor: ColorPalette.black.withValues(alpha: 0.2),
+            overlayWidgetBuilder: (_) => Center(child: CupertinoActivityIndicator(color: ColorPalette.white, radius: 15)),
             child: child!,
           ),
       initialRoute: settingsRoute,

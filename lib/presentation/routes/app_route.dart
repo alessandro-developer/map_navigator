@@ -1,5 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:map_navigator/business_logic.dart';
 import 'package:map_navigator/presentation.dart';
 
 class AppRoute {
@@ -12,7 +14,17 @@ class AppRoute {
         break;
 
       case homeRoute:
-        page = const HomePage();
+        page = MultiBlocProvider(
+          providers: <BlocProvider>[
+            BlocProvider<HomeNavigationCubit>(create: (context) => HomeNavigationCubit()),
+            BlocProvider<HomeCubit>(create: (context) => HomeCubit(), lazy: false),
+          ],
+          child: HomePage(),
+        );
+        break;
+
+      case profileRoute:
+        page = const ProfilePage();
         break;
 
       default:
